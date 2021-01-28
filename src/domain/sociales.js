@@ -9,13 +9,14 @@ function social() {
 
   bot.on("text", (msg) => {
     let text = msg.text.toLocaleLowerCase();
-
+    console.log(text)
     const options = {
       reply_to_message_id: msg.message_id,
+      parse_mode : "HTML"
     };
 
     function control(text) {
-      let txt = ["invitar", "slack", "linkedin", "discord"];
+      let txt = ["/invitar", "/slack", "/linkedin", "/discord", "/whatsapp"];
       let boolean = false
       txt.forEach( i => {
         if(i === text) {
@@ -26,40 +27,50 @@ function social() {
     }
 
     if (control) {
-      console.log(control)
       switch (text) {
-        case "invitar":
+        case "/social":
           bot.sendMessage(
-            msg.from.id,
-            `Hola ${msg.from.first_name}, aquí está el link para que puedas invitar: https://t.me/joinchat/UzonQGUkz56QIkj5`,
+            msg.chat.id,
+            `Hola ${msg.from.first_name}, Estás son todas las comunidades a las que pertenecemos: Slack: https://latamdev.slack.com/ LinkedIn: https://www.linkedin.com/groups/12245320/ Discord: https://www.linkedin.com/groups/12245320/ WhatSapp: https://chat.whatsapp.com/Bih8z3VP2qML3XOhi8NtFH`,
             options
           );
           break;
-        case "slack":
+        case "/invitar":
+          try {
+            bot.sendMessage(
+              msg.chat.id,
+              `Hola ${msg.from.first_name}, aquí está el link para que puedas invitar: https://t.me/joinchat/UzonQGUkz56QIkj5`,
+              options
+            );
+          } catch (error) {
+            console.log(error)
+          }
+          break;
+        case "/slack":
           bot.sendMessage(
-            msg.from.id,
+            msg.chat.id,
             `Hola ${msg.from.first_name}, aquí está el link de nuestro Slack: https://latamdev.slack.com/`,
             options
           );
           break;
-        case "linkedin":
+        case "/whatsapp":
           bot.sendMessage(
-            msg.from.id,
+            msg.chat.id,
+            `Hola ${msg.from.first_name}, tenemos un grupo en WhatSapp, únete a nosotros en el siguiente enlace: https://chat.whatsapp.com/Bih8z3VP2qML3XOhi8NtFH`,
+            options
+          );
+          break;
+        case "/linkedin":
+          bot.sendMessage(
+            msg.chat.id,
             `Hola ${msg.from.first_name}, tenemos un grupo en LinkedIn, únete a nosotros en el siguiente enlace: https://www.linkedin.com/groups/12245320/`,
             options
           );
           break;
-        case "discord":
+        case "/discord":
           bot.sendMessage(
-            msg.from.id,
+            msg.chat.id,
             `Hola ${msg.from.first_name}, puedes encontrarnos en Discord aquí: https://www.linkedin.com/groups/12245320/`,
-            options
-          );
-          break;
-        default:
-          bot.sendMessage(
-            msg.from.id,
-            `Hola ${msg.from.first_name}, no tengo registros de esta comunidad, puedes hablar con algún administrador o agregarla a mi código fuente ubicado en https://github.com/tedesco8/bot-telegram-node.git`,
             options
           );
           break;
