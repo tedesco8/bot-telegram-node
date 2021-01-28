@@ -16,7 +16,7 @@ function social() {
     };
 
     function control(text) {
-      let txt = ["/invitar", "/slack", "/linkedin", "/discord", "/whatsapp"];
+      let txt = ["/social", "/invitar", "/slack", "/linkedin", "/discord", "/whatsapp"];
       let boolean = false
       txt.forEach( i => {
         if(i === text) {
